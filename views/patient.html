@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<title>eHealth applicaiton for PD hospital</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	  
+	<style>
+		body 		{ padding-top:80px; word-wrap:break-word; }
+    table,th,td {
+      border : 1px solid black;
+      border-collapse: collapse;
+      }
+    th,td {
+      padding: 5px;
+      }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<div class="page-header text-center">
+		<h1>Welcome Patient</h1>
+		<a href="/logout" class="btn btn-default btn-sm">Logout</a>
+	</div>
+<div class="row" align="center">	
+
+<button type="button" onclick="loadDoc()">Show my Excercises</button>
+<br><br>
+<table id="Excercises"></table>
+<br><br>
+
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/Ez2GeaMa4c8" frameborder="0" allowfullscreen></iframe>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/7CFLm1SL5EU" frameborder="0" allowfullscreen></iframe>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/B1TIdGG4mE0" frameborder="0" allowfullscreen></iframe>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/wkDiOCIX_xA" frameborder="0" allowfullscreen></iframe>
+		
+
+		<div class="text-center">
+			<p>Assignment for 4ME302</p>
+			<p>Student: Eswar Chukaluri</p>
+		</div>
+
+</div>
+</body>
+<script>
+function loadDoc() {
+  var myurl = "http://vhost11.lnu.se:20090/final/getFilterData.php?parameter=User_IDpatient&value=3";
+  var proxy = 'https://cors-anywhere.herokuapp.com/';
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xhttp.open("GET", proxy+myurl, true);
+  xhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table="<tr><th>Therapy</th><th>Medicine</th><th>Date & Time</th></tr>";
+  var x = xmlDoc.getElementsByTagName("test_sessionID");
+  for (i = 0; i <x.length; i++) { 
+    table += "<tr><td>" +
+    x[i].getElementsByTagName("therapyID")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("medicineID")[0].childNodes[0].nodeValue +
+    "</td><td>" +
+    x[i].getElementsByTagName("test_datetime")[0].childNodes[0].nodeValue +
+    "</td></tr>";
+  }
+  document.getElementById("Excercises").innerHTML = table;
+}
+</script>
+
+
+</html>
